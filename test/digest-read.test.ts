@@ -12,6 +12,7 @@ describe('readNight on runs/2026-10-28.jsonl', () => {
     expect(night).not.toBeNull();
     expect(night?.night).toBe('2026-10-28');
     expect(night?.badLines).toBe(1);
+    expect(night?.counts).toEqual({ ok: 10, retry: 4, fail: 1 });
     expect(night?.rows.map((r) => r.job)).toEqual([
       'digest/render',
       'fixtures/refresh',
@@ -62,7 +63,7 @@ describe('readNight edge cases', () => {
 
   it('returns an empty night for an empty file', () => {
     writeFileSync(join(dir, '2026-01-02.jsonl'), '');
-    expect(readNight(dir, '2026-01-02')).toEqual({ night: '2026-01-02', rows: [], badLines: 0 });
+    expect(readNight(dir, '2026-01-02')).toEqual({ night: '2026-01-02', rows: [], badLines: 0, counts: { ok: 0, retry: 0, fail: 0 } });
   });
 
   it('ignores blank lines and counts bad shapes', () => {
@@ -79,6 +80,7 @@ describe('readNight edge cases', () => {
     writeFileSync(join(dir, '2026-01-03.jsonl'), lines.join('\n') + '\n');
     const night = readNight(dir, '2026-01-03');
     expect(night?.badLines).toBe(4);
+    expect(night?.counts).toEqual({ ok: 1, retry: 1, fail: 0 });
     expect(night?.rows).toEqual([
       { job: 'a', owner: 'y', runs: 2, retries: 1, lastStatus: 'retry', lastError: 'e', firstAt: 't1', lastAt: 't4' },
     ]);

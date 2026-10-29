@@ -27,6 +27,7 @@ export type Night = {
   night: string; // YYYY-MM-DD
   rows: DigestRow[]; // sorted by job
   badLines: number; // non-blank lines that didn't parse as a RunLine; counted, never thrown
+  counts: Record<RunStatus, number>; // parsed lines by status; bad lines are in none
 };
 
 // null: no runs/<night>.jsonl on disk (the page answers 404). An empty file is a Night with no rows.

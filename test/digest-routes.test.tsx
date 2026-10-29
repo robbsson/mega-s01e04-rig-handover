@@ -115,7 +115,7 @@ describe('GET /api/digest/:night (JSON)', () => {
   it('empty night: rows [] and badLines 0', async () => {
     const res = await createApp(config).request(`/api/digest/${EMPTY_NIGHT}`);
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ night: EMPTY_NIGHT, rows: [], badLines: 0 });
+    expect(await res.json()).toEqual({ night: EMPTY_NIGHT, rows: [], badLines: 0, counts: { ok: 0, retry: 0, fail: 0 } });
   });
 
   it('bad line night: badLines 1 and the good rows still present', async () => {

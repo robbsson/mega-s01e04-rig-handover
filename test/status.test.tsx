@@ -13,6 +13,20 @@ describe('status board', () => {
     expect(html).toContain('2026-10-28');
   });
 
+  it('links each night to its digest with line counts', async () => {
+    const app = createApp(config);
+    const html = await (await app.request('/')).text();
+    const text = (night: string) => {
+      const m = html.match(new RegExp(`<li><a href="/digest/${night}">${night}</a>(.*?)</li>`));
+      return (m?.[1] ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    };
+    expect(text('2026-10-28')).toBe('· ok 10 · retry 4 · fail 1');
+    expect(text('2026-10-27')).toMatch(/^· ok \d+ · retry \d+ · fail \d+$/);
+    for (const night of ['2026-10-28', '2026-10-27']) {
+      expect((await app.request(`/digest/${night}`)).status).toBe(200);
+    }
+  });
+
   it('health answers with the lane id', async () => {
     const res = await createApp(config).request('/health');
     expect(await res.json()).toEqual({ ok: true, lane: 'lane-07' });
