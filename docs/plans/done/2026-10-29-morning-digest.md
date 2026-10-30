@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-10-30
 ---
 
 # Morning digest
@@ -77,3 +78,22 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+| # | Issue | Blocked by | Worker | Closed |
+|---|-------|-----------|--------|--------|
+| 1 | Digest types: DigestRow and readNight signature | — | claude-code · opus-5.5 · default | 2026-10-30 |
+| 2 | Run log reader: readNight | #1 | claude-code · opus-5.5 · high | 2026-10-30 |
+| 3 | Digest page: GET /digest/:night | #1, #2 | claude-code · sonnet-5.5 · medium | 2026-10-30 |
+| 4 | Digest JSON: GET /api/digest/:night | #1, #2 | claude-code · sonnet-5.5 · medium | 2026-10-30 |
+| 5 | Board link to each night's digest | #1, #2 | claude-code · sonnet-5.5 · medium | 2026-10-30 |
+| 6 | Route tests for digest page and JSON | #3, #4 | claude-code · haiku-5.5 · medium | 2026-10-30 |
+| 7 | Preview for review | #3 | claude-code · opus-5.5 · default | 2026-10-30 |
+| 8 | Clean up preview and plan | #7 | claude-code · opus-5.5 · default | 2026-10-30 |
+
+Issues: https://github.com/robbsson/mega-s01e04-rig-handover/issues?q=label%3Aplan%3Amorning-digest
+
+#7 was closed once before the reviewer looked and reopened. The preview link carried the lane
+marker until 30 October and now reads "no marker set"; the host's old revision with the marker
+was discarded.
